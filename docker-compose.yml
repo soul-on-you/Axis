@@ -1,0 +1,48 @@
+version: "3.9" # optional since v1.27.0
+services:
+  api:
+    build: ./api
+    command: npm run start
+    restart: unless-stopped
+    ports:
+      - "3500:3500"
+    environment:
+      - PORT=3500
+      - MONGO_URL=mongodb://server_db:27017/api
+    depends_on:
+      - server_db
+  client:
+    build: ./client
+    command: npm start
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+    depends_on:
+      - server
+  server:
+    build: ./server
+    command: npm run dev
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+      # expose port 5000 on the host machine to port 5000 in the container
+      # открыть порт 5000 на хост-компьютере для порта 5000 в контейнере
+    environment:
+      - PORT=5000
+      - JWT_ACCESS_SECRET=DiomedialC
+      - JWT_REFRESH_SECRET=Rerple
+      - MONGODB_URI=mongodb://server_db:27017/X-3D?w=majority&retryWrites=true
+    depends_on:
+      - server_db
+  server_db:
+    image: mongo:5.0.9
+    restart: unless-stopped
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_api:/data/db
+
+volumes:
+  mongodb_api:
