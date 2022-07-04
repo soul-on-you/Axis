@@ -15,23 +15,14 @@ const authMiddleware = (req, res, next) => {
 
     const token = req.header("Authorization").replace("Bearer ", "");
 
-    // if (!token) {
-    //   return res.status(403).json({ message: "Unauthorized" });
-    // }
+    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
 
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_ACCESS_SECRET,
-      (error) => {
-        if (error) return res.status(403).json({ message: "Unauthorized" });
-      }
-    );
-
-    req.userId = decoded;
+    req.user = decoded;
+    console.log(decoded);
     next();
   } catch (e) {
-    logger.error("Error in auth middleware");
-    return res.status(500).json({ message: "Something went wrong" });
+    logger.error("Unauthorized", { error: e.message });
+    return res.status(403).json({ message: "Unauthorized" });
   }
 };
 

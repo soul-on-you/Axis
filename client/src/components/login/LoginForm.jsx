@@ -99,6 +99,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../api/AuthApi";
 import { login } from "../../store/slices/AuthSlice";
+import jwt_decode from "jwt-decode";
 
 const LoginForm = () => {
   const [form] = Form.useForm();
@@ -119,14 +120,14 @@ const LoginForm = () => {
   const handleSubmit = async ({ email, password }) => {
     setErrorMsg("");
     try {
-      const data = await fetch_login({
+      const {accessToken} = await fetch_login({
         email,
         password,
       }).unwrap();
 
-      console.log(data);
+      console.log(accessToken);
 
-      dispatch(login({ ...data, user: { email } }));
+      dispatch(login({ accessToken, ...jwt_decode(accessToken) }));
       //   console.log(location);
       navigate(location.state ? location.state.from.pathname : "/");
     } catch (err) {

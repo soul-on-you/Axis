@@ -1,6 +1,12 @@
 import React, { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useParams } from "react-router-dom";
+import {
+  useGLTF,
+  OrbitControls,
+  AdaptiveDpr,
+  AdaptiveEvents,
+} from "@react-three/drei";
 
 function Box(props) {
   // This reference will give us direct access to the mesh
@@ -26,6 +32,12 @@ function Box(props) {
   );
 }
 
+function Model({ url, ...props }) {
+  const { scene } = useGLTF(url);
+  console.log(scene);
+  return <primitive object={scene} {...props} />;
+}
+
 function Model3D() {
   const params = useParams();
 
@@ -33,9 +45,20 @@ function Model3D() {
   return (
     <Canvas>
       <ambientLight />
+      <OrbitControls maxPolarAngle={Math.PI / 2.1} />
       <pointLight position={[10, 10, 10]} />
       <Box position={[-1.2, 0, 0]} />
       <Box position={[1.2, 0, 0]} />
+      <mesh>
+        <Model
+          url="https://storage.yandexcloud.net/test.io/d2.glb"
+          scale={[0.1, 0.1, 0.1]}
+          position={[1, 2, 3]}
+        />
+        <meshStandardMaterial color="orange" />
+      </mesh>
+      {/* <AdaptiveDpr pixelated />
+      <AdaptiveEvents /> */}
     </Canvas>
   );
 }
