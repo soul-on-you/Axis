@@ -47,8 +47,8 @@ function Model3D() {
       <ambientLight />
       <OrbitControls maxPolarAngle={Math.PI / 2.1} />
       <pointLight position={[10, 10, 10]} />
-      <Box position={[-1.2, 0, 0]} />
-      <Box position={[1.2, 0, 0]} />
+      {/* <Box position={[-1.2, 0, 0]} />
+      <Box position={[1.2, 0, 0]} /> */}
       <mesh>
         <Model
           url={`http://localhost:5000/api/detail/download?detailId=${params.detailId}`}

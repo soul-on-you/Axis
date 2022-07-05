@@ -2,6 +2,8 @@ const bcryptjs = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const User = require("../../models/User");
 const RefreshToken = require("../../models/RefreshToken");
+const Student = require("../../models/Student");
+const Professor = require("../../models/Professor");
 
 const registrationController = (logger) => async (req, res) => {
   try {
@@ -23,6 +25,32 @@ const registrationController = (logger) => async (req, res) => {
     const hashedPassword = await bcryptjs.hash(password, 6);
 
     const user = new User({ email, password: hashedPassword, serialNumber });
+
+    if (req.body.role) {
+      const role = await User.find({ role: req.body.role });
+
+      if (!role) {
+        return res.status(400).json({
+          errors: [
+            {
+              value: req.body.role,
+              msg: "Role not found",
+              param: "role",
+              location: "body",
+            },
+          ],
+        });
+      }
+
+      user.role = role.id;
+
+      if (role.role === "professor" || role.role === "admin") {
+        await new Professor({ user: user.id }).save();
+      }
+    } else {
+      await new Student({ userId: user.id }).save();
+    }
+
     await user.save();
 
     await new RefreshToken({ userId: user.id }).save();

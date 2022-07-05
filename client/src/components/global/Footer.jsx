@@ -6,9 +6,13 @@ function Footer() {
     <AntdFooter
       style={{
         textAlign: "center",
+        fontWeight: 400,
+        fontSize: "14px",
+        lineHeight: "22px",
+        color: "rgba(0, 0, 0, 0.45)",
       }}
     >
-      AXI ©2022 Created by Diomedialc
+      AXIS View Copyright ©2022 Created by DiomedialC
     </AntdFooter>
   );
 }
