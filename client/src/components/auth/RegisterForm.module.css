@@ -1,0 +1,20 @@
+.register_form {
+  /* max-width: 300px; */
+  padding: 20px;
+  padding-top: 0;
+  /* margin-top: 20px; */
+  /* height: 100vh; */
+}
+.register_form_forgot {
+  float: right;
+}
+.ant_col_rtl .register_form_forgot {
+  float: left;
+}
+.register_form_button {
+  width: 100%;
+  margin-bottom: 22px;
+}
+/* .input {
+  min-width: 300;
+} */
