@@ -92,8 +92,10 @@ import {
   Space,
   Spin,
   Typography,
+  message,
 } from "antd";
-import { Link, useLocation } from "react-router-dom";
+import { blue } from "../UI/colors";
+import { useLocation } from "react-router-dom";
 import styles from "./LoginForm.module.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -101,11 +103,11 @@ import { useLoginMutation } from "../../api/AuthApi";
 import { login } from "../../store/slices/AuthSlice";
 import jwt_decode from "jwt-decode";
 
-const LoginForm = () => {
+const LoginForm = ({ setActiveTab }) => {
   const [form] = Form.useForm();
 
   const emailRef = useRef();
-  const [errorMsg, setErrorMsg] = useState("");
+  // const [errorMsg, setErrorMsg] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -118,28 +120,51 @@ const LoginForm = () => {
   }, []);
 
   const handleSubmit = async ({ email, password }) => {
-    setErrorMsg("");
+    // setErrorMsg("");
     try {
-      const {accessToken} = await fetch_login({
+      const { accessToken } = await fetch_login({
         email,
         password,
       }).unwrap();
 
-      console.log(accessToken);
+      // console.log(jwt_decode(accessToken));
 
       dispatch(login({ accessToken, ...jwt_decode(accessToken) }));
-      //   console.log(location);
-      navigate(location.state ? location.state.from.pathname : "/");
+      console.log(location);
+      // navigate(location.state ? location.state.from.pathname : "/");
+      navigate(location.pathname ? location.pathname : "/");
     } catch (err) {
       console.error(err.data);
       if (!err?.status) {
-        setErrorMsg("No server response!");
+        // setErrorMsg("No server response!");
+        message.error("Сервер не отвечает!", 5);
       } else if (err.status === 400) {
-        setErrorMsg(`Invalid email or password. ${err.data.errors[0].msg}!`);
+        // setErrorMsg(`Invalid email or password. ${err.data.errors[0].msg}!`);
+        message.error(
+          `Неверный формат данных. ${
+            err.data.errors[0].param === "email"
+              ? `Электронная почта задана неверно`
+              : err.data.errors[0].param === "password"
+              ? `Пороль не может быть короче 6 символов`
+              : "Неизвестная ошибка"
+          }!`,
+          5
+        );
       } else if (err.status === 401) {
-        setErrorMsg(`Unauthorized. ${err.data.message}!`);
+        // setErrorMsg(`Unauthorized. ${err.data.message}!`);
+        message.error(
+          `Ошибка авторизации. ${
+            err.data.field === "email"
+              ? `Пользователь с логином ${email} не найден`
+              : err.data.field === "password"
+              ? `Неверный пороль`
+              : "Неизвестная ошибка"
+          }!`,
+          5
+        );
       } else {
-        setErrorMsg(`Login failed. ${err.data.message}!`);
+        // setErrorMsg(`Login failed. ${err.data.message}!`);
+        message.error(`Login failed. ${err.data.message}!`, 5);
       }
     }
   };
@@ -170,15 +195,15 @@ const LoginForm = () => {
             Login in System
           </Typography.Title>
 
-          <Alert
+          {/* <Alert
             style={{ display: errorMsg ? "block" : "none" }}
             message={errorMsg}
             type="error"
-          />
+          /> */}
 
-          <></>
           <Spin spinning={isLoading}>
             <Form
+              style={{ minWidth: "300px" }}
               form={form}
               // wrapperCol={{ span: 10, offset: 7 }}
               name="dynamic_rule"
@@ -200,7 +225,7 @@ const LoginForm = () => {
                 ]}
               >
                 <Input
-                  prefix={<UserOutlined className="site-form-item-icon" />}
+                  prefix={<UserOutlined style={{ color: blue.primary }} />}
                   placeholder="Email"
                   ref={emailRef}
                 />
@@ -215,17 +240,28 @@ const LoginForm = () => {
                 ]}
               >
                 <Input
-                  prefix={<LockOutlined className="site-form-item-icon" />}
+                  prefix={<LockOutlined style={{ color: blue.primary }} />}
                   type="password"
                   placeholder="Password"
                 />
               </Form.Item>
-              <Form.Item >
-                <Form.Item name="remember" valuePropName="checked" noStyle>
-                  <Checkbox>Remember me</Checkbox>
-                </Form.Item>
+              <Form.Item>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <Form.Item name="remember" valuePropName="checked" noStyle>
+                    <Checkbox>Remember me</Checkbox>
+                  </Form.Item>
 
-                <Link to={"/"}>Forgot password?</Link>
+                  {/* <Link to={"/"}>Forgot password?</Link> */}
+                  <Typography.Link
+                    // href="https://ant.design"
+                    onClick={() => setActiveTab("login")}
+                    target="_blank"
+                  >
+                    Forgot password?
+                  </Typography.Link>
+                </div>
               </Form.Item>
 
               <Form.Item>
@@ -237,7 +273,14 @@ const LoginForm = () => {
                   Log in
                 </Button>
                 {/* Or <a href="">register now!</a> */}
-                Or <Link to="/register">register now!</Link>
+                Or{" "}
+                <Typography.Link
+                  // href="https://ant.design"
+                  onClick={() => setActiveTab("register")}
+                  target="_blank"
+                >
+                  register now!
+                </Typography.Link>
               </Form.Item>
             </Form>
           </Spin>

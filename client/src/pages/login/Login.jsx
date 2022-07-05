@@ -1,5 +1,5 @@
 import React from "react";
-import LoginForm from "../../components/login/LoginForm";
+import LoginForm from "../../components/auth/LoginForm";
 
 // import Icon from "@ant-design/icons";
 import logo from "../../assets/Axis/Logo.svg";
