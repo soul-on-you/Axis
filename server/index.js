@@ -15,7 +15,7 @@ const start = async () => {
       () => console.log("mongo connected")
     );
 
-    app.listen(process.env.PORT, "localhost", () =>
+    app.listen(process.env.PORT, () =>
       console.log(`Server started on port ${process.env.PORT}`)
     );
   } catch (err) {

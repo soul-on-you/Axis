@@ -81,7 +81,7 @@ describe("Auth check", () => {
         .expect((data) => {
           console.log(data.body);
         })
-        .expect(401, { message: `User with this ${email} does not exist` }); //, { accessToken }
+        .expect(401, { field: "email", message: `User with this ${email} does not exist` }); //, { accessToken }
     });
 
     it("fail case wrong password", async () => {
@@ -94,7 +94,7 @@ describe("Auth check", () => {
         .expect((data) => {
           console.log(data.body);
         })
-        .expect(401, { message: "Wrong password" }); //, { accessToken }
+        .expect(401, { field: "password", message: "Wrong password" }); //, { accessToken }
     });
 
     afterAll(async () => {

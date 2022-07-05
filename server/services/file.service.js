@@ -49,12 +49,12 @@ class FileService {
     const detailId = req.query.detailId;
 
     // console.log(req.user);
-    if (
-      !req.user.student.details
-        .map((detail) => detail.detailId)
-        .includes(detailId)
-    )
-      return res.status(403).json({ message: "You dont have access rights" });
+    // if (
+    //   !req.user.student.details
+    //     .map((detail) => detail.detailId)
+    //     .includes(detailId)
+    // )
+    //   return res.status(403).json({ message: "You dont have access rights" });
 
     const filePath = path.join(
       this.path,
