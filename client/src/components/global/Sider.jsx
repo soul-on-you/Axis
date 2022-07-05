@@ -19,15 +19,15 @@ function Sider() {
   const location = useLocation();
   // console.log(location.pathname);
 
-  // const user = useSelector(selectUser());
-  const user = {
-    tasks: [
-      { detail: { title: "Task1", id: "6723iuBUHBUIe2" } },
-      { detail: { title: "Task2", id: "Hj3njcy893dfsa" } },
-      { detail: { title: "Task3", id: "jk3jY&*2jhjka6" } },
-      { detail: { title: "Task4", id: "HJhjdhbhg89hsh" } },
-    ],
-  };
+  const user = useSelector(selectUser);
+  // const user = {
+  //   tasks: [
+  //     { detail: { title: "Task1", id: "6723iuBUHBUIe2" } },
+  //     { detail: { title: "Task2", id: "Hj3njcy893dfsa" } },
+  //     { detail: { title: "Task3", id: "jk3jY&*2jhjka6" } },
+  //     { detail: { title: "Task4", id: "HJhjdhbhg89hsh" } },
+  //   ],
+  // };
 
   const routes = useMemo(
     () =>
@@ -103,12 +103,6 @@ function Sider() {
               icon: <UserOutlined />,
               onClick: () => navigate("/about"),
             },
-            {
-              label: "Dev",
-              key: "dev",
-              icon: <UserOutlined />,
-              onClick: () => navigate("/dev"),
-            },
           ]
         : [
             {
@@ -121,10 +115,10 @@ function Sider() {
               label: "Details",
               key: "detail",
               icon: <Object3D />,
-              children: user.tasks.map((task) => ({
-                key: task.detail.id,
+              children: user.student.tasks.map((task) => ({
+                key: task.detail.detailId,
                 label: task.detail.title,
-                onClick: () => navigate(`/detail/${task.detail.id}`), //console.log(1)
+                onClick: () => navigate(`/detail/${task.detail.detailId}`), //console.log(1)
               })),
               // onClick: () => navigate("/detail"), //console.log(2)
             },

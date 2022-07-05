@@ -51,9 +51,9 @@ function Model3D() {
       <Box position={[1.2, 0, 0]} />
       <mesh>
         <Model
-          url="https://storage.yandexcloud.net/test.io/d2.glb"
-          scale={[0.1, 0.1, 0.1]}
-          position={[1, 2, 3]}
+          url={`http://localhost:5000/api/detail/download?detailId=${params.detailId}`}
+          // scale={[0.1, 0.1, 0.1]}
+          position={[0, -2, 0]}
         />
         <meshStandardMaterial color="orange" />
       </mesh>
