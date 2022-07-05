@@ -13,17 +13,22 @@ const loginController = (logger) => async (req, res) => {
 
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate("role", { "role": 1 });
     if (!user) {
       return res
         .status(401)
-        .json({ message: `User with this ${email} does not exist` });
+        .json({
+          field: "email",
+          message: `User with this ${email} does not exist`,
+        });
     }
 
     const isMatchPasswd = await bcryptjs.compare(password, user.password);
 
     if (!isMatchPasswd) {
-      return res.status(401).json({ message: "Wrong password" });
+      return res
+        .status(401)
+        .json({ field: "password", message: "Wrong password" });
     }
 
     const accessToken = await createAccessJWT(user);

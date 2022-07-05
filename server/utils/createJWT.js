@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const Detail3D = require("../models/Detail3D");
 const Professor = require("../models/Professor");
 const RefreshToken = require("../models/RefreshToken");
 const Student = require("../models/Student");
@@ -19,19 +20,33 @@ const createAccessJWT = async (user) => {
    */
 
   let roleProps;
-  if (user.role === "student") {
-    const student = await Student.findOne({ userId: user.id });
+  if (user.role.role === "student") {
+    const student = await Student.findOne({ userId: user.id }).populate({
+      path: "tasks",
+      populate: {
+        path: "detailId",
+        model: "Detail3D",
+        populate: {
+          path: "graduation",
+          model: "Graduation",
+        },
+      },
+    });
 
     if (!student) {
-      //   return res.status(401).json({ message: "Student not found" });
-
       return { status: 401, message: "Student not found" };
     }
 
+    // console.log(student.tasks[0]);
+    // console.log(student);
     roleProps = {
       tasks: [
         ...student.tasks.map((task) => ({
-          detailId: task.detailId,
+          detail: {
+            detailId: task.detailId.id,
+            title: task.detailId.title,
+            graduation: task.detailId.graduation.level,
+          },
           passed: task.passed,
           moderation: task.moderation,
           comment: task.comment,
@@ -41,12 +56,10 @@ const createAccessJWT = async (user) => {
     };
   }
 
-  if (user.role === "professor" || user.role === "admin") {
+  if (user.role.role === "professor" || user.role.role === "admin") {
     const professor = await Professor.findOne({ userId: user.id });
 
     if (!professor) {
-      //   return res.status(401).json({ message: "Professor not found" });
-
       return { status: 401, message: "Professor not found" };
     }
 
@@ -71,11 +84,11 @@ const createAccessJWT = async (user) => {
       user: {
         id: user.id,
         serialNumber: user.serialNumber,
-        role: user.role,
+        role: user.role.role,
         avater: user.avatar,
-      },
-      [user.role]: {
-        ...roleProps,
+        [user.role.role]: {
+          ...roleProps,
+        },
       },
     },
     process.env.JWT_ACCESS_SECRET,

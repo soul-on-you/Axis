@@ -3,6 +3,8 @@ require("dotenv").config({ path: `.${process.env.NODE_ENV}.env` });
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Role = require("../models/Role");
+const Graduation = require("../models/Graduation");
 const { createAccessJWT, createRefreshJWT } = require("./createJWT");
 
 describe("Auth check", () => {
@@ -25,8 +27,8 @@ describe("Auth check", () => {
   describe("Create JWT", () => {
     it("success create access jwt case", async () => {
       const user = await User.findOne({
-        email: "student@madi.net",
-      });
+        email: "student2@madi.net",
+      }).populate("role");
 
       const accessToken = await createAccessJWT(user);
 
@@ -36,10 +38,10 @@ describe("Auth check", () => {
             id: expect.any(String),
             serialNumber: expect.any(Number),
             role: expect.any(String),
-          },
-          student: {
-            tasks: expect.any(Array),
-            passed: expect.any(Boolean),
+            student: {
+              tasks: expect.any(Array),
+              passed: expect.any(Boolean),
+            },
           },
           exp: expect.any(Number),
           iat: expect.any(Number),
