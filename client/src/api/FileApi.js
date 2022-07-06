@@ -76,10 +76,10 @@ export const fileAPI = apiMiddleware.injectEndpoints({
       }),
     }),
     uploadDetail: builder.mutation({
-      query: ({ studentId, groupId, file }) => ({
-        url: "/detail",
+      query: (body) => ({
+        url: "/detail/upload",
         method: "POST",
-        body: { studentId, groupId, file },
+        body,
       }),
     }),
   }),
