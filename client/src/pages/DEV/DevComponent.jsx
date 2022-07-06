@@ -1,165 +1,255 @@
-import Icon, {
-  FileOutlined,
-  PieChartOutlined,
-  UserOutlined,
-  DesktopOutlined,
-  TeamOutlined,
-} from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu } from "antd";
-import { useState } from "react";
-const { Header, Content, Footer, Sider } = Layout;
+// import { Button, Descriptions, PageHeader, Row, Statistic, Tag } from 'antd';
+// import React from 'react';
 
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
+// const DEV = () => (
+//   <>
+//     <PageHeader
+//       className="site-page-header"
+//       onBack={() => window.history.back()}
+//       title="Title"
+//       subTitle="This is a subtitle"
+//       extra={[
+//         <Button key="3">Operation</Button>,
+//         <Button key="2">Operation</Button>,
+//         <Button key="1" type="primary">
+//           Primary
+//         </Button>,
+//       ]}
+//     >
+//       <Descriptions size="small" column={3}>
+//         <Descriptions.Item label="Created">Lili Qu</Descriptions.Item>
+//         <Descriptions.Item label="Association">
+//           <a>421421</a>
+//         </Descriptions.Item>
+//         <Descriptions.Item label="Creation Time">2017-01-10</Descriptions.Item>
+//         <Descriptions.Item label="Effective Time">2017-10-10</Descriptions.Item>
+//         <Descriptions.Item label="Remarks">
+//           Gonghu Road, Xihu District, Hangzhou, Zhejiang, China
+//         </Descriptions.Item>
+//       </Descriptions>
+//     </PageHeader>
+//     <br />
+//     <PageHeader
+//       onBack={() => window.history.back()}
+//       title="Title"
+//       tags={<Tag color="blue">Running</Tag>}
+//       subTitle="This is a subtitle"
+//       extra={[
+//         <Button key="3">Operation</Button>,
+//         <Button key="2">Operation</Button>,
+//         <Button key="1" type="primary">
+//           Primary
+//         </Button>,
+//       ]}
+//     >
+//       <Row>
+//         <Statistic title="Status" value="Pending" />
+//         <Statistic
+//           title="Price"
+//           prefix="$"
+//           value={568.08}
+//           style={{
+//             margin: '0 32px',
+//           }}
+//         />
+//         <Statistic title="Balance" prefix="$" value={3345.08} />
+//       </Row>
+//     </PageHeader>
+//   </>
+// );
 
-const MySvg = () => {
-  return (
-    // <svg width="100%" height="100%" viewBox="0 0 100 100">
-    //   <path
-    //     d="M832 320L576 192H512L256 320v384l256 128h64l256-128V384z m-320 448l-192-96v-256L512 512z m256-96L576 768V512l192-96zM576 448H512L320 352 512 256h64l192 96zM128 283.52L512 64h64l128 72.96v-64L576 0H512L64 256v256h64zM576 960H512l-384-219.52V576H64v192l448 256h64l192-109.44v-64L576 960z m192-850.56v64l192 109.44v456.96l-128 72.96v64l192-108.8V256z"
-    //     fill="#666666"
-    //     p-id="567"
-    //   ></path>
-    // </svg>
-    // <svg
-    // //   class="icon"
-    //   //   style={{
-    //   //     width: " 1em",
-    //   //     height: "1em",
-    //   //     verticalAlign: "middle",
-    //   //     fill: "currentColor",
-    //   //     overflow: "hidden",
-    //   //   }}
-    //   width="1em"
-    //   height="1em"
-    //   fill="currentColor"
+// export default DEV;
 
-    //   viewBox="0 0 1024 1024"
-    // //   version="1.1"
-    //   //   xmlns="http://www.w3.org/2000/svg"
-    //   //   p-id="566"
-    // >
-    <svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor">
-      <path
-        d="M832 320L576 192H512L256 320v384l256 128h64l256-128V384z m-320 448l-192-96v-256L512 512z m256-96L576 768V512l192-96zM576 448H512L320 352 512 256h64l192 96zM128 283.52L512 64h64l128 72.96v-64L576 0H512L64 256v256h64zM576 960H512l-384-219.52V576H64v192l448 256h64l192-109.44v-64L576 960z m192-850.56v64l192 109.44v456.96l-128 72.96v64l192-108.8V256z"
-        // fill="#666666"
-        // p-id="567"
-      ></path>
-    </svg>
-  );
-};
+import {
+  Button,
+  Descriptions,
+  PageHeader,
+  Statistic,
+  Tabs,
+  Card,
+  Col,
+  Row,
+  Tag,
+  Avatar,
+  Comment,
+} from "antd";
+import React from "react";
+import AliyunOSSUpload from "./DEV_UPLOAD";
+import DEV_UPLOAD_V2 from "./DEV_UPLOAD_V2";
+const { TabPane } = Tabs;
 
-const MyIcon = ()=><Icon component={MySvg} />;
+const renderContent = (column = 2) => (
+  <Descriptions size="small" column={column}>
+    <Descriptions.Item label="Деталь выдал">Сальный А.Г.</Descriptions.Item>
+    {/* <Descriptions.Item label="Association">
+      <a>421421</a>
+    </Descriptions.Item> */}
+    <Descriptions.Item label="Сложность">
+      {/* <Tag color="red">red</Tag> */}
+      {/* <Tag color="volcano">volcano</Tag>
+      <Tag color="orange">orange</Tag>
+      <Tag color="gold">gold</Tag>
+      <Tag color="lime">lime</Tag> */}
+      <Tag color="green">очень легко</Tag>
+    </Descriptions.Item>
+    <Descriptions.Item label="Задание выдано">2017-01-10</Descriptions.Item>
+    <Descriptions.Item label="Последние изменения">
+      2017-10-10
+    </Descriptions.Item>
+    {/* <Descriptions.Item label="Remarks">
+      Gonghu Road, Xihu District, Hangzhou, Zhejiang, China
+    </Descriptions.Item> */}
+  </Descriptions>
+);
 
-const items = [
-  getItem("Option 1", "1", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("Files", "9", <MyIcon />), //FileOutlined
-];
-
-const DEV = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  return (
-    <Layout
+const extraContent = (
+  <div
+    style={{
+      display: "flex",
+      width: "max-content",
+      justifyContent: "flex-end",
+    }}
+  >
+    <Statistic
+      title="Status"
+      value="Pending"
       style={{
-        minHeight: "200vh",
+        marginRight: 32,
+      }}
+    />
+    <Statistic title="Price" prefix="$" value={568.08} />
+  </div>
+);
+
+const Content = ({ children, extra }) => (
+  <div className="content">
+    <div className="main">{children}</div>
+    <div className="extra">{extra}</div>
+  </div>
+);
+
+const ExampleComment = ({ children }) => (
+  <Comment
+    actions={[<span key="comment-nested-reply-to">Reply to</span>]}
+    author={<a>Han Solo</a>}
+    avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+    content={
+      <p>
+        We supply a series of design principles, practical patterns and high
+        quality design resources (Sketch and Axure).
+      </p>
+    }
+  >
+    {children}
+  </Comment>
+);
+
+const DEV = () => (
+  <>
+    <PageHeader
+      className="site-page-header-responsive"
+      // onBack={() => window.history.back()}
+      title="Деталь 144"
+      subTitle="Задание 4"
+      // extra={[
+      //   <Button key="3">Operation</Button>,
+      //   <Button key="2">Operation</Button>,
+      //   <Button key="1" type="primary">
+      //     Primary
+      //   </Button>,
+      // ]}
+      footer={
+        <Tabs defaultActiveKey="details">
+          <TabPane tab="Details" key="details" />
+          <TabPane tab="Rule" key="rule" />
+        </Tabs>
+      }
+    >
+      <Content extra={extraContent}>{renderContent()}</Content>
+    </PageHeader>
+    <div
+      style={{
+        padding: 30,
+        // background: "#ececec"
       }}
     >
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-        style={{
-          overflow: "auto",
-          height: "100vh",
-          position: "fixed",
-          left: 0,
-          top: 0,
-          bottom: 0,
-        }}
-      >
-        <div
-          className="logo"
-          style={{
-            height: 32,
-            margin: 16,
-            background: "blue",
-          }}
-        />
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={items}
-        />
-      </Sider>
-      <Layout className="site-layout">
-        <Header
-          className="site-layout-background"
-          style={{
-            padding: 0,
-            background: "#fff",
-          }}
-        />
-        <Content
-          style={{
-            margin: "0 16px",
-          }}
-        >
-          <Breadcrumb
-            style={{
-              margin: "16px 0",
-            }}
+      <Row gutter={16}>
+        <Col span={12}>
+          <Card title="Card title" bordered={false}>
+            <PageHeader
+              className="site-page-header-responsive"
+              // onBack={() => window.history.back()}
+              title="Деталь 144"
+              subTitle="Задание 4"
+              extra={[
+                // <Button key="2">Загрузить задание</Button>,
+                <AliyunOSSUpload />,
+                <Button key="pass_button" type="primary">
+                  Сдать задание
+                </Button>,
+              ]}
+              footer={
+                // <ExampleComment>
+                //   <ExampleComment>
+                //     <ExampleComment />
+                //     <ExampleComment />
+                //   </ExampleComment>
+                // </ExampleComment>
+                <>
+                  <ExampleComment />
+                  <ExampleComment />
+                  <ExampleComment />
+                  <ExampleComment />
+                </>
+              }
+            >
+              <Content extra={extraContent}>{renderContent()}</Content>
+            </PageHeader>
+          </Card>
+        </Col>
+        <Col span={12}>
+          <Card title="Card title" bordered={false}>
+            <PageHeader
+              className="site-page-header-responsive"
+              // onBack={() => window.history.back()}
+              title="Деталь 145"
+              subTitle="Задание 5"
+              extra={[
+                // <Button key="123">Загрузить задание</Button>,
+                <DEV_UPLOAD_V2 />,
+                <Button key="132" type="primary">
+                  Сдать задание
+                </Button>,
+              ]}
+              footer={
+                <ExampleComment>
+                  <ExampleComment>
+                    <ExampleComment />
+                    <ExampleComment />
+                  </ExampleComment>
+                </ExampleComment>
+              }
+            >
+              <Content extra={extraContent}>{renderContent()}</Content>
+            </PageHeader>
+          </Card>
+        </Col>
+        {/* <Col span={8}>
+          <Card
+            title="Card title"
+            bordered={false}
+            // style={{
+            //   width: 300,
+            // }}
           >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: "#fff",
-            }}
-          >
-            Bill is a cat.
-          </div>
-        </Content>
-        <Footer
-          style={{
-            textAlign: "center",
-          }}
-        >
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
-      </Layout>
-    </Layout>
-  );
-};
+            <p>Card content</p>
+            <p>Card content</p>
+            <p>Card content</p>
+          </Card>
+        </Col> */}
+      </Row>
+    </div>
+  </>
+);
 
 export default DEV;
-
-// #components-layout-demo-side .logo {
-//   height: 32px;
-//   margin: 16px;
-//   background: rgba(255, 255, 255, 0.3);
-// }
-
-// .site-layout .site-layout-background {
-//   background: #fff;
-// }
