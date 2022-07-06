@@ -2,6 +2,7 @@ const { Schema, model, ObjectId } = require("mongoose");
 
 const User = new Schema({
   serialNumber: { type: Number, required: true, unique: true },
+  name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: ObjectId, default: "62a1df56d15e9a4caf9cb1c6", ref: "Role" },

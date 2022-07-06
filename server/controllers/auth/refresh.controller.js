@@ -13,7 +13,7 @@ const refreshController = (logger) => async (req, res) => {
 
     res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
 
-    console.log(oldRefreshToken);
+    // console.log(oldRefreshToken);
 
     const foundUser = await RefreshToken.findOne({ token: oldRefreshToken });
     if (!foundUser) {
@@ -29,7 +29,7 @@ const refreshController = (logger) => async (req, res) => {
       return res.status(403).json({ message: "Expired refresh token" });
     }
 
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate("role", { "role": 1 });
 
     if (!user) {
       return res.status(401).json({ message: `Uncorrect refresh token data` });

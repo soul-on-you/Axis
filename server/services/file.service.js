@@ -75,10 +75,64 @@ class FileService {
     return res.status(404).json({ message: "File not found" });
   };
 
-  async uploadDetail(detailId, file) {
-    // const filePath = path.join(this.path, detailId);
-    // await fs.promises.writeFile(filePath, file);
-  }
+  uploadDetail = async (req, res) => {
+    try {
+      const file = req.files.detail;
+      // const detailId = req.body.detailId;
+      const user = req.user.user;
+
+      if (user.role !== "student") {
+        const dirPath = path.join(this.path, "admin", user.id);
+
+        if (!fs.existsSync(dirPath)) {
+          await fs.mkdirSync(dirPath);
+        }
+
+        const filePath = path.join(dirPath, file.name);
+        console.log(filePath);
+
+        if (fs.existsSync(filePath)) {
+          await fs.promises.unlink(filePath);
+        }
+
+        file.mv(filePath);
+      } else {
+        const filePath = path.join(this.path, "students", user.id, detailId);
+
+        if (fs.existsSync(filePath)) {
+          await fs.promises.unlink(filePath);
+        }
+
+        file.mv(filePath);
+
+        const student = await Student.findOne({ userId: user.id });
+
+        const student2 = await Student.findOne({
+          userId: user.id,
+          tasks: { $elemMatch: { detailId } },
+        });
+
+        console.log(student);
+        console.log(student2);
+
+        const task = student.tasks.find((task) => task.detailId === detailId);
+
+        task.moderation = true;
+        task.moderated = false;
+        // task.createdAt = new Date();
+
+        await student.save();
+        // await Student.findOneAndUpdate(
+        //   { userId: user.id, tasks: { $elemMatch: { detailId } } },
+        //   { moderation: true, moderated:false, updatedAt: Date.now() }
+        // );
+      }
+      return res.status(200).json({ message: "File uploaded" });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  };
 }
 
 module.exports = new FileService();

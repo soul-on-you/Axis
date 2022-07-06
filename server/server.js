@@ -4,6 +4,7 @@ const express = require("express");
 
 const requestLogger = require("./middleware/request.logger.middleware");
 const credentials = require("./middleware/credentials.middleware");
+const fileUpload = require("express-fileupload");
 const cors = require("cors");
 const corsOptions = require("./config/corsOptions");
 const cookieParser = require("cookie-parser");
@@ -17,6 +18,7 @@ const createServer = () => {
 
   app.use(requestLogger);
   app.use(credentials);
+  app.use(fileUpload({}));
   app.use(cors(corsOptions));
   app.use(express.json());
   app.use(cookieParser());

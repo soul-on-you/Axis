@@ -8,6 +8,7 @@ const Student = new Schema({
       detailId: { type: ObjectId, required: true, ref: "Detail3D" }, //!
       passed: { type: Boolean, required: true, default: false },
       moderation: { type: Boolean, required: true, default: false },
+      moderated: {type: Boolean, required: true, default: false},
       mark: { type: Number, required: false },
       comment: { type: String, required: false },
       createdAt: { type: Date, default: Date.now },
