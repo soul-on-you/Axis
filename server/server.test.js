@@ -31,6 +31,7 @@ describe("Auth check", () => {
       await request(server)
         .post("/api/auth/registration")
         .send({
+          name: "Дмитрий Дмитрий Дима",
           email: "new@test.com",
           password: "new@test.com",
           serialNumber: 123123,
@@ -45,6 +46,7 @@ describe("Auth check", () => {
       await request(server)
         .post("/api/auth/registration")
         .send({
+          name: "Дмитрий Дмитрий Дима",
           email: "new@test.com",
           password: "new@test.com",
           serialNumber: 123123,
@@ -81,7 +83,10 @@ describe("Auth check", () => {
         .expect((data) => {
           console.log(data.body);
         })
-        .expect(401, { field: "email", message: `User with this ${email} does not exist` }); //, { accessToken }
+        .expect(401, {
+          field: "email",
+          message: `User with this ${email} does not exist`,
+        }); //, { accessToken }
     });
 
     it("fail case wrong password", async () => {
@@ -111,6 +116,7 @@ describe("Auth check", () => {
   describe("GET /api/auth/auth --> auth user", () => {
     it("successful auth case", async () => {
       const user = new User({
+        name: "Дмитрий Дмитрий Дима",
         email: "new_login@test.com",
         password: "new_login@test.com",
         serialNumber: 110011,

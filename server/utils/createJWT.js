@@ -49,6 +49,7 @@ const createAccessJWT = async (user) => {
           },
           passed: task.passed,
           moderation: task.moderation,
+          moderated: task.moderated,
           comment: task.comment,
         })),
       ],

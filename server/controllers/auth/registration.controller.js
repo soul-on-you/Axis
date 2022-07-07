@@ -13,7 +13,7 @@ const registrationController = (logger) => async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password, serialNumber } = req.body;
+    const { email, password, serialNumber, name } = req.body;
 
     const candidate = await User.findOne({ email });
 
@@ -24,7 +24,7 @@ const registrationController = (logger) => async (req, res) => {
 
     const hashedPassword = await bcryptjs.hash(password, 6);
 
-    const user = new User({ email, password: hashedPassword, serialNumber });
+    const user = new User({ email, password: hashedPassword, serialNumber, name });
 
     if (req.body.role) {
       const role = await User.find({ role: req.body.role });

@@ -2,7 +2,7 @@ const User = require("../../models/User");
 const authController = (logger) => async (req, res) => {
   try {
     const user = await User.findById(req.user.user.id);
-    console.log(req.user.user);
+    // console.log(req.user.user);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });

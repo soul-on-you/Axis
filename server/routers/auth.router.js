@@ -35,9 +35,11 @@ router.post(
       min: 6,
       max: 8,
     }),
+    check("name", "Need to be like template").matches(/^[а-яА-Я]+\s[а-яА-Я]+\s[а-яА-Я]+[а-яА-Я]$/),
   ],
   registrationController(logger)
 );
+
 
 router.post(
   "/login",
