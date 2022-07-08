@@ -73,7 +73,7 @@ import {
   Avatar,
   Comment,
 } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import AliyunOSSUpload from "./DEV_UPLOAD";
 import DEV_UPLOAD_V2 from "./DEV_UPLOAD_V2";
 const { TabPane } = Tabs;
@@ -144,112 +144,105 @@ const ExampleComment = ({ children }) => (
   </Comment>
 );
 
-const DEV = () => (
-  <>
-    <PageHeader
-      className="site-page-header-responsive"
-      // onBack={() => window.history.back()}
-      title="Деталь 144"
-      subTitle="Задание 4"
-      // extra={[
-      //   <Button key="3">Operation</Button>,
-      //   <Button key="2">Operation</Button>,
-      //   <Button key="1" type="primary">
-      //     Primary
-      //   </Button>,
-      // ]}
-      footer={
-        <Tabs defaultActiveKey="details">
-          <TabPane tab="Details" key="details" />
-          <TabPane tab="Rule" key="rule" />
-        </Tabs>
-      }
-    >
-      <Content extra={extraContent}>{renderContent()}</Content>
-    </PageHeader>
-    <div
-      style={{
-        padding: 30,
-        // background: "#ececec"
-      }}
-    >
-      <Row gutter={16}>
-        <Col span={12}>
-          <Card title="Card title" bordered={false}>
-            <PageHeader
-              className="site-page-header-responsive"
-              // onBack={() => window.history.back()}
-              title="Деталь 144"
-              subTitle="Задание 4"
-              extra={[
-                // <Button key="2">Загрузить задание</Button>,
-                <AliyunOSSUpload />,
-                <Button key="pass_button" type="primary">
-                  Сдать задание
-                </Button>,
-              ]}
-              footer={
-                // <ExampleComment>
-                //   <ExampleComment>
-                //     <ExampleComment />
-                //     <ExampleComment />
-                //   </ExampleComment>
-                // </ExampleComment>
-                <>
-                  <ExampleComment />
-                  <ExampleComment />
-                  <ExampleComment />
-                  <ExampleComment />
-                </>
-              }
-            >
-              <Content extra={extraContent}>{renderContent()}</Content>
-            </PageHeader>
-          </Card>
-        </Col>
-        <Col span={12}>
-          <Card title="Card title" bordered={false}>
-            <PageHeader
-              className="site-page-header-responsive"
-              // onBack={() => window.history.back()}
-              title="Деталь 145"
-              subTitle="Задание 5"
-              extra={[
-                // <Button key="123">Загрузить задание</Button>,
-                <DEV_UPLOAD_V2 />,
-                <Button key="132" type="primary">
-                  Сдать задание
-                </Button>,
-              ]}
-              footer={
-                <ExampleComment>
+const DEV = () => {
+  const [fileList, setFileList] = useState([]);
+  return (
+    <>
+      <PageHeader
+        className="site-page-header-responsive"
+        // onBack={() => window.history.back()}
+        title="Деталь 144"
+        subTitle="Задание 4"
+        // extra={[
+        //   <Button key="3">Operation</Button>,
+        //   <Button key="2">Operation</Button>,
+        //   <Button key="1" type="primary">
+        //     Primary
+        //   </Button>,
+        // ]}
+        footer={
+          <Tabs defaultActiveKey="details">
+            <TabPane tab="Details" key="details" />
+            <TabPane tab="Rule" key="rule" />
+          </Tabs>
+        }
+      >
+        <Content extra={extraContent}>{renderContent()}</Content>
+      </PageHeader>
+      <div
+        style={{
+          padding: 30,
+          // background: "#ececec"
+        }}
+      >
+        <Row gutter={16}>
+          <Col span={12}>
+            <Card title="Card title" bordered={false}>
+              <PageHeader
+                className="site-page-header-responsive"
+                // onBack={() => window.history.back()}
+                title="Деталь 144"
+                subTitle="Задание 4"
+                extra={[
+                  // <Button key="2">Загрузить задание</Button>,
+                  <AliyunOSSUpload />,
+                  <Button key="pass_button" type="primary">
+                    Сдать задание
+                  </Button>,
+                ]}
+                footer={
+                  // <ExampleComment>
+                  //   <ExampleComment>
+                  //     <ExampleComment />
+                  //     <ExampleComment />
+                  //   </ExampleComment>
+                  // </ExampleComment>
+                  <>
+                    <ExampleComment />
+                    <ExampleComment />
+                    <ExampleComment />
+                    <ExampleComment />
+                  </>
+                }
+              >
+                <Content extra={extraContent}>{renderContent()}</Content>
+              </PageHeader>
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card title="Card title" bordered={false}>
+              <PageHeader
+                className="site-page-header-responsive"
+                // onBack={() => window.history.back()}
+                title="Деталь 145"
+                subTitle="Задание 5"
+                extra={[
+                  // <Button key="123">Загрузить задание</Button>,
+                  <DEV_UPLOAD_V2
+                    fileList={fileList}
+                    setFileList={setFileList}
+                  />,
+                  <Button key="132" type="primary">
+                    Сдать задание
+                  </Button>,
+                ]}
+                footer={
                   <ExampleComment>
-                    <ExampleComment />
-                    <ExampleComment />
+                    <ExampleComment>
+                      <ExampleComment />
+                      <ExampleComment />
+                    </ExampleComment>
                   </ExampleComment>
-                </ExampleComment>
-              }
-            >
-              <Content extra={extraContent}>{renderContent()}</Content>
-            </PageHeader>
-          </Card>
-        </Col>
-        {/* <Col span={8}>
-          <Card
-            title="Card title"
-            bordered={false}
-            // style={{
-            //   width: 300,
-            // }}
-          >
-            <p>Card content</p>
-            <p>Card content</p>
-            <p>Card content</p>
-          </Card>
-        </Col> */}
-      </Row>
-    </div>
-  </>
-);
+                }
+              >
+                <Content extra={extraContent}>{renderContent()}</Content>
+              </PageHeader>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    </>
+  );
+};
 
 export default DEV;

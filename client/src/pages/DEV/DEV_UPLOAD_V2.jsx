@@ -1,28 +1,35 @@
 import { UploadOutlined } from "@ant-design/icons";
+// import { combineReducers } from "@reduxjs/toolkit";
 import { Button, message, Upload } from "antd";
 import React, { useState } from "react";
+import { flushSync } from "react-dom";
+import { useUploadDetailMutation } from "../../api/FileApi";
 
-const DEV_UPLOAD_V2 = () => {
-  const [fileList, setFileList] = useState([]);
+const DEV_UPLOAD_V2 = ({ fileList, setFileList }) => {
+  //
+  // const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
+
+  const [post_detail, { error }] = useUploadDetailMutation();
 
   const handleUpload = () => {
     const formData = new FormData();
     fileList.forEach((file) => {
-      formData.append("files[]", file);
+      formData.append("files", file);
     });
-    setUploading(true); // You can use any AJAX library you like
 
-    fetch("https://www.mocky.io/v2/5cc8019d300000980a055e76", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then(() => {
+    setUploading(true);
+
+    post_detail(formData)
+      .unwrap()
+      .then((e) => {
+        console.log(e);
+
         setFileList([]);
         message.success("upload successfully.");
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e);
         message.error("upload failed.");
       })
       .finally(() => {
@@ -30,7 +37,17 @@ const DEV_UPLOAD_V2 = () => {
       });
   };
 
+  // const beforeUpload = async (file) => {
+  //   const suffix = file.name.slice(file.name.lastIndexOf("."));
+  //   const filename = Date.now() + suffix;
+
+  //   file.url = "details/" + filename;
+  //   return file;
+  // };
+
   const props = {
+    name: "files",
+    multiple: true,
     onRemove: (file) => {
       const index = fileList.indexOf(file);
       const newFileList = fileList.slice();
@@ -38,8 +55,45 @@ const DEV_UPLOAD_V2 = () => {
       setFileList(newFileList);
     },
     beforeUpload: (file) => {
-      setFileList([...fileList, file]);
-      return false;
+      // console.log(file);
+      // flushSync(() =>
+      //   setFileList([
+      //     ...fileList,
+      //     {
+      //       url: file.url,
+      //       name: file.name,
+      //       percent: 100,
+      //       response: undefined,
+      //       size: file.size,
+      //       status: "done",
+      //       type: file.type,
+      //       originFileObj: file,
+      //     },
+      //   ])
+      // );
+      // file.url = "dev";
+      flushSync(() => setFileList([...fileList, file]));
+
+      // flushSync(() =>
+      //   setFileList([
+      //     ...fileList,
+      //     {
+      //       ...file,
+      //       percent: 100,
+      //       response: null,
+      //       status: "done",
+      //       originFileObj: file,
+      //     },
+      //   ])
+      // );
+      // console.log(fileList);
+
+      //   return false;
+      return file;
+    },
+    // beforeUpload,
+    customRequest: ({ onSuccess }) => {
+      onSuccess();
     },
     fileList,
   };

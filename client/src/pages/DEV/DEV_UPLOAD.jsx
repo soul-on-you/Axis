@@ -1,16 +1,12 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Form, message, Upload } from "antd";
 import React, { useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 import { useUploadDetailMutation } from "../../api/FileApi";
 
 const AliyunOSSUpload = ({ value, onChange }) => {
   const [post_detail, { isLoading, status, isSuccess, isError, error }] =
     useUploadDetailMutation();
-
-  const handleChange = ({ fileList }) => {
-    console.log("Aliyun OSS:", fileList);
-    onChange?.([...fileList]);
-  };
 
   const onRemove = (file) => {
     const files = (value || []).filter((v) => v.url !== file.url);
@@ -37,56 +33,12 @@ const AliyunOSSUpload = ({ value, onChange }) => {
       .unwrap()
       .then((e) => {
         console.log(e);
-        onSuccess();
+        flushSync(() => onSuccess());
       })
       .catch((e) => {
         console.log(e);
-        onError();
+        flushSync(() => onError());
       });
-
-    console.log(response);
-    console.log(status);
-
-    // if (isSuccess) {
-    //   console.log("success");
-    //   onSuccess(response);
-    // }
-
-    // if (isError) {
-    //   console.log("success");
-    //   onError(error);
-    // }
-
-    // info.onProgress("noURL", 1000, file.size);
-
-    // info.onProgress = (e) => {
-    //   progressEvent.lengthComputable
-    //     ? progressEvent.total
-    //     : progressEvent.target.getResponseHeader("content-length") ||
-    //       progressEvent.target.getResponseHeader(
-    //         "x-decompressed-content-length"
-    //       );
-    // };
-    // if (status === 200) {
-    //   message.success(`${file.name}上传成功`);
-    // }
-    // if (status === 500) {
-    //   message.error(`${file.name}上传失败`);
-    // }
-    // if (status === 400) {
-    //   message.error(`${file.name}上传失败`);
-    // }
-    // if (status === 401) {
-    //   message.error(`${file.name}上传失败`);
-    // }
-    // if (status === 403) {
-    //   message.error(`${file.name}上传失败`);
-    // }
-    // if (status === 404) {
-    //   message.error(`${file.name}上传失败`);
-    // }
-    // if (status === 405) {
-    //   message.error(`${file.name}上传失败`);
   };
 
   const uploadProps = {
@@ -97,6 +49,7 @@ const AliyunOSSUpload = ({ value, onChange }) => {
     customRequest: customRequest,
     beforeUpload,
     onChange(info) {
+        console.log(info.fileList);
       if (info.file.status !== "uploading") {
         console.log(info.file, info.fileList);
       }
@@ -106,14 +59,6 @@ const AliyunOSSUpload = ({ value, onChange }) => {
         message.error(`${info.file.name} file upload failed.`);
       }
     },
-    // progress: {
-    //   strokeColor: {
-    //     "0%": "#108ee9",
-    //     "100%": "#87d068",
-    //   },
-    //   strokeWidth: 3,
-    //   format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%`,
-    // },
   };
   return (
     <Upload {...uploadProps}>
