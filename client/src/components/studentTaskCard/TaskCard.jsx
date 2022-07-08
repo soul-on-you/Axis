@@ -1,6 +1,5 @@
-import { Card, PageHeader, Button, Comment } from "antd";
+import { Card, PageHeader, Button, Comment, Avatar, Descriptions, Tag } from "antd";
 import React, { useState } from "react";
-// import DEV_UPLOAD_V2 from "../../pages/DEV/DEV_UPLOAD_V2";
 import Upload from "../Upload/Upload";
 
 const ExampleComment = ({ children }) => (
@@ -19,7 +18,7 @@ const ExampleComment = ({ children }) => (
   </Comment>
 );
 
-function TaskCard({ title, order, level, createdAt, updatedAt }) {
+function TaskCard({ title, order, level, createdAt, updatedAt, detailId }) {
   //   const [fileList, setFileList] = useState([]);
 
   return (
@@ -31,7 +30,7 @@ function TaskCard({ title, order, level, createdAt, updatedAt }) {
         extra={[
           // <Button key="123">Загрузить задание</Button>,
           //   <DEV_UPLOAD_V2 fileList={fileList} setFileList={setFileList} />,
-          <Upload />,
+          <Upload detailId={detailId}/>,
           //   <Button key="132" type="primary">
           //     Сдать задание
           //   </Button>,
@@ -45,7 +44,7 @@ function TaskCard({ title, order, level, createdAt, updatedAt }) {
           </>
         }
       >
-        <Descriptions size="small" column={column}>
+        <Descriptions size="small" column={2}>
           <Descriptions.Item label="Деталь выдал">
             Сальный А.Г.
           </Descriptions.Item>
@@ -54,7 +53,7 @@ function TaskCard({ title, order, level, createdAt, updatedAt }) {
             {level === "beginer" ? (
               <Tag color="lime">очень легко</Tag>
             ) : level === "easy" ? (
-              <Tag color="gold">легко</Tag>
+              <Tag color="green">легко</Tag>
             ) : level === "medium" ? (
               <Tag color="orange">номально</Tag>
             ) : level === "hard" ? (

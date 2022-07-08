@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, message } from "antd";
 import { useUploadDetailMutation } from "../../api/FileApi";
 
-function UploadButton({ fileList, setFileList }) {
+function UploadButton({ fileList, setFileList, detailId }) {
   const [uploading, setUploading] = useState(false);
 
   const [post_detail, { error }] = useUploadDetailMutation();
@@ -12,6 +12,7 @@ function UploadButton({ fileList, setFileList }) {
     fileList.forEach((file) => {
       formData.append("files", file);
     });
+    formData.append("detailId", detailId);
 
     setUploading(true);
 
@@ -36,7 +37,7 @@ function UploadButton({ fileList, setFileList }) {
       disabled={fileList.length === 0}
       loading={uploading}
       style={{
-        marginTop: 16,
+        // marginTop: 16,
       }}
     >
       {uploading ? "Сдать задание" : "Идет загрузка"}

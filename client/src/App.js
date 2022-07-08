@@ -6,12 +6,14 @@ import Home from "./pages/home/Home.jsx";
 import Page404 from "./pages/page404/Page404.jsx";
 import Login from "./pages/login/Login.jsx";
 import RequireAuth from "./components/auth/RequireAuth.jsx";
-import DEV from "./pages/DEV/DevComponent.jsx";
+// import DEV from "./pages/DEV/DEV_STUDENT_STAT.jsx";
+import DEV_ADMIN_STUDPANEL from "./pages/DEV/DEV_ADMIN_STUDENT_PANEL.jsx";
 import Model3D from "./pages/model3D/Model3D.jsx";
 import { useSelector } from "react-redux";
 import { selectIsAuth } from "./store/slices/AuthSlice.js";
 import Auth from "./pages/auth/Auth.jsx";
 import StudentStat from "./pages/studentStat/StudentStat.jsx";
+import Profile from "./pages/profile/Profile.jsx";
 
 function App() {
   const isAuth = useSelector(selectIsAuth);
@@ -27,12 +29,13 @@ function App() {
           {/* public routes */}
           <Route index element={<Home />} />
           <Route path="statistic" element={<StudentStat />} />
+          <Route path="profile" element={<Profile />} />
 
           {/* private routes */}
           <Route element={<RequireAuth />}>
             <Route path="detail/:detailId" element={<Model3D />} />
             <Route path="counter" element={<Counter />} />
-            <Route path="dev" element={<DEV />} />
+            <Route path="dev" element={<DEV_ADMIN_STUDPANEL />} />
           </Route>
           {/* error route */}
           <Route path="*" element={<Page404 />} />

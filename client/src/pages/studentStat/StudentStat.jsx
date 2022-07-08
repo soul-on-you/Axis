@@ -13,7 +13,8 @@ import {
   Statistic,
 } from "antd";
 import AliyunOSSUpload from "../DEV/DEV_UPLOAD";
-import DEV_UPLOAD_V2 from "../DEV/DEV_UPLOAD_V2";
+import TaskCard from "../../components/studentTaskCard/TaskCard";
+// import DEV_UPLOAD_V2 from "../DEV/DEV_UPLOAD_V2";
 
 function StudentStat() {
   const renderContent = (column = 2) => (
@@ -40,25 +41,6 @@ function StudentStat() {
     </Descriptions>
   );
 
-  //   const extraContent = (
-  //     <div
-  //       style={{
-  //         display: "flex",
-  //         width: "max-content",
-  //         justifyContent: "flex-end",
-  //       }}
-  //     >
-  //       <Statistic
-  //         title="Status"
-  //         value="Pending"
-  //         style={{
-  //           marginRight: 32,
-  //         }}
-  //       />
-  //       <Statistic title="Price" prefix="$" value={568.08} />
-  //     </div>
-  //   );
-
   const Content = ({ children, extra }) => (
     <div className="content">
       <div className="main">{children}</div>
@@ -74,11 +56,14 @@ function StudentStat() {
           title: "nissan gt",
           graduation: "easy",
         },
+        order: 1,
         passed: false,
         mark: 20,
         moderation: false,
         moderated: false,
         comment: "переделай все",
+        createdAt: "2022-06-24T06:44:30.443+00:00",
+        updatedAt: "2022-06-24T06:44:30.443+00:00",
       },
       {
         detail: {
@@ -86,11 +71,14 @@ function StudentStat() {
           title: "tesla model 3",
           graduation: "hard",
         },
+        order: 2,
         passed: true,
         mark: 90,
         moderation: false,
         moderated: true,
         comment: "все отлично",
+        createdAt: "2022-06-24T06:44:30.443+00:00",
+        updatedAt: "2022-06-24T06:44:30.443+00:00",
       },
       {
         detail: {
@@ -98,8 +86,11 @@ function StudentStat() {
           title: "bmw i8",
           graduation: "extra-hard",
         },
+        order: 4,
         passed: false,
         moderation: false,
+        createdAt: "2022-06-24T06:44:30.443+00:00",
+        updatedAt: "2022-06-24T06:44:30.443+00:00",
       },
       {
         detail: {
@@ -107,8 +98,11 @@ function StudentStat() {
           title: "tesla model s",
           graduation: "hard",
         },
+        order: 3,
         passed: false,
         moderation: false,
+        createdAt: "2022-06-24T06:44:30.443+00:00",
+        updatedAt: "2022-06-24T06:44:30.443+00:00",
       },
     ],
     passed: false,
@@ -133,41 +127,35 @@ function StudentStat() {
     </Comment>
   );
 
-  //   console.log(student.tasks.reduce((acc, task) => acc + (task.mark || 0), 0));
-  //   console.log(student.tasks.reduce((acc, task) => acc + !!task.mark, 0));
-
-  const MyCard =({title})=>{
-    <Col span={12}>
-            <Card title={title} bordered={false}>
-              <PageHeader
-                className="site-page-header-responsive"
-                // onBack={() => window.history.back()}
-                title="Деталь 145"
-                subTitle="Задание 5"
-                extra={[
-                  // <Button key="123">Загрузить задание</Button>,
-                  <DEV_UPLOAD_V2
-                    fileList={fileList}
-                    setFileList={setFileList}
-                  />,
-                  <Button key="132" type="primary">
-                    Сдать задание
-                  </Button>,
-                ]}
-                footer={
-                  <ExampleComment>
-                    <ExampleComment>
-                      <ExampleComment />
-                      <ExampleComment />
-                    </ExampleComment>
-                  </ExampleComment>
-                }
-              >
-                {/* <Content extra={extraContent}>{renderContent()}</Content> */}
-              </PageHeader>
-            </Card>
-          </Col>
-  }
+//   const MyCard = ({ title }) => {
+//     <Col span={12}>
+//       <Card title={title} bordered={false}>
+//         <PageHeader
+//           className="site-page-header-responsive"
+//           // onBack={() => window.history.back()}
+//           title="Деталь 145"
+//           subTitle="Задание 5"
+//           extra={[
+//             // <Button key="123">Загрузить задание</Button>,
+//             <DEV_UPLOAD_V2 fileList={fileList} setFileList={setFileList} />,
+//             <Button key="132" type="primary">
+//               Сдать задание
+//             </Button>,
+//           ]}
+//           footer={
+//             <ExampleComment>
+//               <ExampleComment>
+//                 <ExampleComment />
+//                 <ExampleComment />
+//               </ExampleComment>
+//             </ExampleComment>
+//           }
+//         >
+//           {/* <Content extra={extraContent}>{renderContent()}</Content> */}
+//         </PageHeader>
+//       </Card>
+//     </Col>;
+//   };
   return (
     <>
       <PageHeader
@@ -277,139 +265,21 @@ function StudentStat() {
       <div
         style={{
           padding: 30,
-          // background: "#ececec"
         }}
       >
-        <Row gutter={[16,24]}>
-          <Col span={12}>
-            <Card title="Card title" bordered={false}>
-              <PageHeader
-                className="site-page-header-responsive"
-                // onBack={() => window.history.back()}
-                title="Деталь 144"
-                subTitle="Задание 4"
-                extra={[
-                  // <Button key="2">Загрузить задание</Button>,
-                  <AliyunOSSUpload />,
-                  <Button key="pass_button" type="primary">
-                    Сдать задание
-                  </Button>,
-                ]}
-                footer={
-                  // <ExampleComment>
-                  //   <ExampleComment>
-                  //     <ExampleComment />
-                  //     <ExampleComment />
-                  //   </ExampleComment>
-                  // </ExampleComment>
-                  <>
-                    <ExampleComment />
-                    <ExampleComment />
-                    <ExampleComment />
-                    <ExampleComment />
-                  </>
-                }
-              >
-                {/* <Content extra={extraContent}>{renderContent()}</Content> */}
-              </PageHeader>
-            </Card>
-          </Col>
-          <Col span={12}>
-            <Card title="Card title" bordered={false}>
-              <PageHeader
-                className="site-page-header-responsive"
-                // onBack={() => window.history.back()}
-                title="Деталь 145"
-                subTitle="Задание 5"
-                extra={[
-                  // <Button key="123">Загрузить задание</Button>,
-                  <DEV_UPLOAD_V2
-                    fileList={fileList}
-                    setFileList={setFileList}
-                  />,
-                  <Button key="132" type="primary">
-                    Сдать задание
-                  </Button>,
-                ]}
-                footer={
-                  <ExampleComment>
-                    <ExampleComment>
-                      <ExampleComment />
-                      <ExampleComment />
-                    </ExampleComment>
-                  </ExampleComment>
-                }
-              >
-                {/* <Content extra={extraContent}>{renderContent()}</Content> */}
-              </PageHeader>
-            </Card>
-          </Col>
-          <Col span={12}>
-            <Card title="Card title" bordered={false}>
-              <PageHeader
-                className="site-page-header-responsive"
-                // onBack={() => window.history.back()}
-                title="Деталь 144"
-                subTitle="Задание 4"
-                extra={[
-                  // <Button key="2">Загрузить задание</Button>,
-                  <AliyunOSSUpload />,
-                  <Button key="pass_button" type="primary">
-                    Сдать задание
-                  </Button>,
-                ]}
-                footer={
-                  // <ExampleComment>
-                  //   <ExampleComment>
-                  //     <ExampleComment />
-                  //     <ExampleComment />
-                  //   </ExampleComment>
-                  // </ExampleComment>
-                  <>
-                    <ExampleComment />
-                    <ExampleComment />
-                    <ExampleComment />
-                    <ExampleComment />
-                  </>
-                }
-              >
-                {/* <Content extra={extraContent}>{renderContent()}</Content> */}
-              </PageHeader>
-            </Card>
-          </Col>
-          <Col span={12}>
-            <Card title="Card title" bordered={false}>
-              <PageHeader
-                className="site-page-header-responsive"
-                // onBack={() => window.history.back()}
-                title="Деталь 144"
-                subTitle="Задание 4"
-                extra={[
-                  // <Button key="2">Загрузить задание</Button>,
-                  <AliyunOSSUpload />,
-                  <Button key="pass_button" type="primary">
-                    Сдать задание
-                  </Button>,
-                ]}
-                footer={
-                  // <ExampleComment>
-                  //   <ExampleComment>
-                  //     <ExampleComment />
-                  //     <ExampleComment />
-                  //   </ExampleComment>
-                  // </ExampleComment>
-                  <>
-                    <ExampleComment />
-                    <ExampleComment />
-                    <ExampleComment />
-                    <ExampleComment />
-                  </>
-                }
-              >
-                {/* <Content extra={extraContent}>{renderContent()}</Content> */}
-              </PageHeader>
-            </Card>
-          </Col>
+        <Row gutter={[16, 24]}>
+          {student.tasks.map((task) => (
+            <Col span={12} key={task.detail.detailId}>
+              <TaskCard
+                title={task.detail.title}
+                order={task.order}
+                level={task.detail.graduation}
+                detailId={task.detail.detailId}
+                createdAt={task.createdAt}
+                updatedAt={task.updatedAt}
+              />
+            </Col>
+          ))}
         </Row>
       </div>
     </>

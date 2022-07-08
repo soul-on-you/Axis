@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import UploadButton from "./UploadButton";
 import UploadProvider from "./UploadProvider";
 
-const Upload = () => {
+const Upload = ({detailId}) => {
   const [fileList, setFileList] = useState([]);
 
   return (
@@ -14,7 +14,7 @@ const Upload = () => {
       }}
     >
       <UploadProvider fileList={fileList} setFileList={setFileList} />
-      <UploadButton fileList={fileList} setFileList={setFileList} />
+      <UploadButton detailId={detailId} fileList={fileList} setFileList={setFileList} />
     </div>
   );
 };
