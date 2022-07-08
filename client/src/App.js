@@ -11,6 +11,7 @@ import Model3D from "./pages/model3D/Model3D.jsx";
 import { useSelector } from "react-redux";
 import { selectIsAuth } from "./store/slices/AuthSlice.js";
 import Auth from "./pages/auth/Auth.jsx";
+import StudentStat from "./pages/studentStat/StudentStat.jsx";
 
 function App() {
   const isAuth = useSelector(selectIsAuth);
@@ -25,6 +26,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           {/* public routes */}
           <Route index element={<Home />} />
+          <Route path="statistic" element={<StudentStat />} />
 
           {/* private routes */}
           <Route element={<RequireAuth />}>

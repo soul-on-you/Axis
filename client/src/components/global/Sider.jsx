@@ -123,10 +123,10 @@ function Sider() {
               // onClick: () => navigate("/detail"), //console.log(2)
             },
             {
-              label: "Counter",
-              key: "counter",
+              label: "Statistic",
+              key: "statistic",
               icon: <PieChartOutlined />,
-              onClick: () => navigate("/counter"),
+              onClick: () => navigate("/statistic"),
             },
             {
               label: "About",
