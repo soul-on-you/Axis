@@ -59,10 +59,10 @@ function Sider() {
             },
 
             {
-              label: "About",
-              key: "about",
+              label: "Profile",
+              key: "profile",
               icon: <UserOutlined />,
-              onClick: () => navigate("/about"),
+              onClick: () => navigate("/profile"),
             },
             {
               label: "Dev",
@@ -98,10 +98,10 @@ function Sider() {
               onClick: () => navigate("/counter"),
             },
             {
-              label: "About",
-              key: "about",
+              label: "Profile",
+              key: "profile",
               icon: <UserOutlined />,
-              onClick: () => navigate("/about"),
+              onClick: () => navigate("/profile"),
             },
           ]
         : [
@@ -129,10 +129,10 @@ function Sider() {
               onClick: () => navigate("/statistic"),
             },
             {
-              label: "About",
-              key: "about",
+              label: "Profile",
+              key: "profile",
               icon: <UserOutlined />,
-              onClick: () => navigate("/about"),
+              onClick: () => navigate("/profile"),
             },
           ],
     // eslint-disable-next-line react-hooks/exhaustive-deps

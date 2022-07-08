@@ -6,9 +6,16 @@ import { Tabs, Typography } from "antd";
 import Footer from "../../components/global/Footer";
 import LoginForm from "../../components/auth/LoginForm";
 import RegisterForm from "../../components/auth/RegisterForm";
+import { useAuthQuery } from "../../api/AuthApi";
 
 function Auth() {
   const [activeTab, setActiveTab] = useState("login");
+
+  const { data: user, isLoading } = useAuthQuery();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
@@ -60,7 +67,7 @@ function Auth() {
           activeKey={activeTab}
           onChange={(key) => {
             if (activeTab !== undefined) {
-                setActiveTab(key);
+              setActiveTab(key);
             }
           }}
           style={{ display: "flex", alignItems: "center" }}

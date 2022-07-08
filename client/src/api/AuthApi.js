@@ -20,9 +20,23 @@ export const authAPI = apiMiddleware.injectEndpoints({
       query: () => ({
         url: "/auth/auth",
         method: "GET",
+        headers: {
+          Authorization: "Bearer refreshNEED",
+        },
+      }),
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        url: "/auth/logout",
+        method: "POST",
       }),
     }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useAuthQuery } = authAPI;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useAuthQuery,
+  useLogoutMutation,
+} = authAPI;
