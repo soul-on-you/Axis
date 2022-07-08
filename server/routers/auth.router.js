@@ -53,7 +53,7 @@ router.post(
   loginController(logger)
 );
 
-router.get("/logout", logoutController(logger));
+router.post("/logout", logoutController(logger));
 
 router.get("/auth", authMiddleware, authController(logger));
 

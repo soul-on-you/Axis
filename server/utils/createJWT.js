@@ -47,6 +47,7 @@ const createAccessJWT = async (user) => {
             title: task.detailId.title,
             graduation: task.detailId.graduation.level,
           },
+          order: task.order,
           passed: task.passed,
           moderation: task.moderation,
           moderated: task.moderated,

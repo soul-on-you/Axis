@@ -10,6 +10,7 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const authHeader = req.headers.authorization || req.headers.Authorization;
+    // console.log(authHeader);
 
     if (!authHeader?.startsWith("Bearer ")) return res.sendStatus(401);
 

@@ -77,8 +77,15 @@ class FileService {
 
   uploadDetail = async (req, res) => {
     try {
-      const file = req.files.detail;
-      // const detailId = req.body.detailId;
+      const file = req.files?.detail;
+      const files = req.files?.files || [];
+      console.log(req.files);
+      console.log(files);
+      const detailId = req.body.detailId;
+
+      if (file) {
+        files.push(file);
+      }
       const user = req.user.user;
 
       if (user.role !== "student") {
@@ -88,44 +95,48 @@ class FileService {
           await fs.mkdirSync(dirPath);
         }
 
-        const filePath = path.join(dirPath, file.name);
-        console.log(filePath);
+        for (const file of files) {
+          const filePath = path.join(dirPath, file.name);
+          console.log(filePath);
 
-        if (fs.existsSync(filePath)) {
-          await fs.promises.unlink(filePath);
+          if (fs.existsSync(filePath)) {
+            await fs.promises.unlink(filePath);
+          }
+
+          file.mv(filePath);
         }
-
-        file.mv(filePath);
       } else {
-        const filePath = path.join(this.path, "students", user.id, detailId);
+        const studentPath = path.join(this.path, "students", user.id);
+        //!добавить между student и id еще группу
+        const dirPath = path.join(studentPath, detailId);
+        console.log(dirPath);
 
-        if (fs.existsSync(filePath)) {
-          await fs.promises.unlink(filePath);
+        if (!fs.existsSync(dirPath)) {
+          if (!fs.existsSync(studentPath)) {
+            await fs.promises.mkdir(studentPath);
+          }
+          await fs.promises.mkdir(dirPath);
         }
 
-        file.mv(filePath);
+        for (const file of files) {
+          const filePath = path.join(dirPath, file.name);
+          console.log(filePath);
+
+          if (fs.existsSync(filePath)) {
+            await fs.promises.unlink(filePath);
+          }
+
+          file.mv(filePath);
+        }
 
         const student = await Student.findOne({ userId: user.id });
 
-        const student2 = await Student.findOne({
-          userId: user.id,
-          tasks: { $elemMatch: { detailId } },
-        });
-
-        console.log(student);
-        console.log(student2);
-
-        const task = student.tasks.find((task) => task.detailId === detailId);
+        const task = student.tasks.find((task) => task.detailId == detailId);
 
         task.moderation = true;
         task.moderated = false;
-        // task.createdAt = new Date();
 
         await student.save();
-        // await Student.findOneAndUpdate(
-        //   { userId: user.id, tasks: { $elemMatch: { detailId } } },
-        //   { moderation: true, moderated:false, updatedAt: Date.now() }
-        // );
       }
       return res.status(200).json({ message: "File uploaded" });
     } catch (err) {
