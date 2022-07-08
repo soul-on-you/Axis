@@ -36,11 +36,8 @@ function UploadButton({ fileList, setFileList, detailId }) {
       onClick={handleUpload}
       disabled={fileList.length === 0}
       loading={uploading}
-      style={{
-        // marginTop: 16,
-      }}
     >
-      {uploading ? "Сдать задание" : "Идет загрузка"}
+      {uploading ? "Идет загрузка" : "Сдать задание"}
     </Button>
   );
 }

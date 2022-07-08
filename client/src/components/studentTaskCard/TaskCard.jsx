@@ -1,5 +1,23 @@
-import { Card, PageHeader, Button, Comment, Avatar, Descriptions, Tag } from "antd";
-import React, { useState } from "react";
+import {
+  Card,
+  PageHeader,
+  Comment,
+  Avatar,
+  Descriptions,
+  Tag,
+  Divider,
+  Spin,
+  Image,
+} from "antd";
+
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  ExclamationCircleOutlined,
+  SyncOutlined,
+} from "@ant-design/icons";
+
+import React from "react";
 import Upload from "../Upload/Upload";
 
 const ExampleComment = ({ children }) => (
@@ -18,22 +36,51 @@ const ExampleComment = ({ children }) => (
   </Comment>
 );
 
-function TaskCard({ title, order, level, createdAt, updatedAt, detailId }) {
+function TaskCard({
+  title,
+  order,
+  level,
+  status,
+  detailId,
+  createdAt,
+  updatedAt,
+}) {
   //   const [fileList, setFileList] = useState([]);
 
   return (
-    <Card title={title} bordered={false}>
+    <Card
+      // title={title}
+      bordered={false}
+    >
       <PageHeader
         className="site-page-header-responsive"
         title={title}
         subTitle={`Задание ${order}`}
         extra={[
-          // <Button key="123">Загрузить задание</Button>,
-          //   <DEV_UPLOAD_V2 fileList={fileList} setFileList={setFileList} />,
-          <Upload detailId={detailId}/>,
-          //   <Button key="132" type="primary">
-          //     Сдать задание
-          //   </Button>,
+          //   <Upload detailId={detailId}/>,
+          <div
+            //   style={{display:"flex", justifyContent:"space-between", alignItems:"center"}
+            style={{ fontSize: 16, alignContent: "center" }}
+          >
+            Статус задания:{" "}
+            {status === "done" ? (
+              <Tag icon={<CheckCircleOutlined />} color="success">
+                зачтено
+              </Tag>
+            ) : status === "moderation" ? (
+              <Tag icon={<SyncOutlined spin />} color="processing">
+                на рассмотрении
+              </Tag>
+            ) : status === "need_redone" ? (
+              <Tag icon={<ExclamationCircleOutlined />} color="warning">
+                требуются исправления
+              </Tag>
+            ) : (
+              <Tag icon={<CloseCircleOutlined />} color="error">
+                не сдано
+              </Tag>
+            )}
+          </div>,
         ]}
         footer={
           <>
@@ -44,6 +91,8 @@ function TaskCard({ title, order, level, createdAt, updatedAt, detailId }) {
           </>
         }
       >
+        <Divider />
+
         <Descriptions size="small" column={2}>
           <Descriptions.Item label="Деталь выдал">
             Сальный А.Г.
@@ -73,6 +122,19 @@ function TaskCard({ title, order, level, createdAt, updatedAt, detailId }) {
             {updatedAt.slice(0, 10)}
           </Descriptions.Item>
         </Descriptions>
+
+        <Divider />
+
+        <Image
+          src={`https://storage.yandexcloud.net/test.io/detail.png`}
+          placeholder={<Spin />}
+        />
+
+        <Divider />
+
+        <Upload detailId={detailId} />
+
+        <Divider />
       </PageHeader>
     </Card>
   );
