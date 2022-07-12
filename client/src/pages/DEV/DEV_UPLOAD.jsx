@@ -49,7 +49,7 @@ const AliyunOSSUpload = ({ value, onChange }) => {
     customRequest: customRequest,
     beforeUpload,
     onChange(info) {
-        console.log(info.fileList);
+      console.log(info.fileList);
       if (info.file.status !== "uploading") {
         console.log(info.file, info.fileList);
       }
