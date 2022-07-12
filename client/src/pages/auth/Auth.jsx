@@ -7,6 +7,7 @@ import Footer from "../../components/global/Footer";
 import LoginForm from "../../components/auth/LoginForm";
 import RegisterForm from "../../components/auth/RegisterForm";
 import { useAuthQuery } from "../../api/AuthApi";
+import Preloader from "../../components/UI/preloader/Preloader";
 
 function Auth() {
   const [activeTab, setActiveTab] = useState("login");
@@ -15,13 +16,13 @@ function Auth() {
 
   if (isLoading) {
     return <div>Loading...</div>;
+    // return <Preloader  />;
   }
 
   return (
     <div
       style={{
         background: "#F0F2F5",
-        heig: "100vh",
         display: "flex",
         height: "100vh",
         flexDirection: "column",
@@ -30,6 +31,10 @@ function Auth() {
         minHeight: 680,
       }}
     >
+      {/* {isLoading ? (
+        <Preloader />
+      ) : (
+        <> */}
       <div
         style={{
           display: "flex",
@@ -81,6 +86,8 @@ function Auth() {
         </Tabs>
       </div>
       <Footer />
+      {/* </>
+      )} */}
     </div>
   );
 }
