@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const authRouter = require("./routers/auth.router");
 const detailRouter = require("./routers/detail.router");
 const authMiddleware = require("./middleware/auth.middleware");
+const userRouter = require("./routers/user.router");
 const errorLogger = require("./middleware/error.logger.middleware");
 
 const createServer = () => {
@@ -26,6 +27,8 @@ const createServer = () => {
   app.use("/api/detail", detailRouter);
 
   app.use(authMiddleware);
+
+  app.use("/api/user", userRouter);
 
   app.use(errorLogger);
 

@@ -292,12 +292,14 @@ describe("Auth check", () => {
         userId: "62b01db68975e2905128e333",
       });
 
+      console.log("token", token);
+
       const cookie = [
-        `jwt=${token.token}; Max-Age=86400; Path=/; Expires=Thu, 28 Jun 2040 10:04:47 GMT; HttpOnly; Secure; SameSite=Strict`,
+        `jwt=${token}; Max-Age=86400; Path=/; Expires=Thu, 28 Jun 2040 10:04:47 GMT; HttpOnly; Secure; SameSite=Strict`,
       ];
 
       await request(server)
-        .get("/api/auth/logout")
+        .post("/api/auth/logout")
         .set("Cookie", cookie)
         .expect((data) => {
           console.log(data.body);
@@ -307,7 +309,7 @@ describe("Auth check", () => {
 
     it("success logout case if no refreshToken", async () => {
       await request(server)
-        .get("/api/auth/logout")
+        .post("/api/auth/logout")
         .expect((data) => {
           console.log(data.body);
         })
